@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentín Alvites — Especialista Audiovisual & Editor de Video</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c1: #FF3366;
+    --c2: #FFD600;
+    --c3: #00E5FF;
+    --c4: #7C4DFF;
+    --c5: #00E676;
+    --dark: #0A0A0F;
+    --dark2: #12121A;
+    --dark3: #1C1C28;
+    --text: #F0F0F0;
+    --muted: #888899;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* Custom cursor - Mejorado para permitir interacción */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--c1);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--c1);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+    mix-blend-mode: difference;
+  }
+
+  /* Ocultar cursor nativo solo en pantallas grandes si se desea el efecto estético */
+  @media (min-width: 1025px) {
+    body { cursor: none; }
+  }
+  @media (max-width: 1024px) {
+    .cursor, .cursor-ring { display: none; }
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(10,10,15,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--c1); }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+    text-transform: uppercase;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(124,77,255,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,51,102,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 50% 20%, rgba(0,229,255,0.08) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: linear-gradient(var(--muted) 1px, transparent 1px), linear-gradient(90deg, var(--muted) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,51,102,0.1);
+    border: 1px solid rgba(255,51,102,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--c1);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--c1);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(56px, 9vw, 110px);
+    line-height: 0.92;
+    letter-spacing: -3px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero-name .line1 { display: block; color: var(--text); }
+  .hero-name .line2 {
+    display: block;
+    background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    font-size: 18px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 550px;
+    margin-bottom: 48px;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-desc strong { color: var(--text); font-weight: 500; }
+
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--c1);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,51,102,0.35); }
+
+  .btn-outline {
+    border: 1.5px solid rgba(255,255,255,0.2);
+    color: var(--text);
+    padding: 14px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.25s;
+    backdrop-filter: blur(8px);
+  }
+  .btn-outline:hover { border-color: var(--c3); color: var(--c3); }
+
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 48px;
+    display: flex; align-items: center; gap: 12px;
+    color: var(--muted); font-size: 12px;
+    letter-spacing: 2px; text-transform: uppercase;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: linear-gradient(90deg, var(--c1), transparent);
+    animation: scrollLine 2s infinite;
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleX(0); transform-origin: left; }
+    50% { transform: scaleX(1); transform-origin: left; }
+    51% { transform: scaleX(1); transform-origin: right; }
+    100% { transform: scaleX(0); transform-origin: right; }
+  }
+
+  .hero-stats {
+    position: absolute; right: 48px; bottom: 80px;
+    display: flex; flex-direction: column; gap: 24px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat { text-align: right; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px; font-weight: 800;
+    background: linear-gradient(135deg, var(--c2), var(--c1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION BASE */
+  section { padding: 100px 48px; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--c3);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 48px;
+  }
+
+  /* SOBRE MÍ */
+  #sobre {
+    background: var(--dark2);
+    position: relative;
+    overflow: hidden;
+  }
+  #sobre::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,229,255,0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  .sobre-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 850px) {
+    .sobre-grid { grid-template-columns: 1fr; gap: 40px; }
+    nav { padding: 20px; }
+    .nav-links { display: none; }
+    section { padding: 60px 20px; }
+    .hero-stats { position: static; flex-direction: row; justify-content: space-between; margin-top: 40px; }
+    .stat { text-align: left; }
+  }
+
+  .sobre-text p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+  .sobre-text p strong { color: var(--text); font-weight: 500; }
+
+  .sobre-right { display: flex; flex-direction: column; gap: 20px; }
+
+  .skill-item {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .skill-header {
+    display: flex; justify-content: space-between;
+    font-size: 13px; font-weight: 500;
+  }
+  .skill-header span:last-child { color: var(--muted); }
+  .skill-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .skill-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 1.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* SERVICIOS */
+  #servicios { background: var(--dark); }
+
+  .servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .servicio-card {
+    background: var(--dark2);
+    padding: 40px 32px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .servicio-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--accent, var(--c1)), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .servicio-card:hover::before { opacity: 0.07; }
+  .servicio-card:hover { transform: translateY(-2px); }
+
+  .servicio-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .servicio-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .servicio-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .servicio-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 20px;
+  }
+  .stag {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  /* TRABAJOS */
+  #trabajos {
+    background: var(--dark2);
+  }
+
+  .trabajos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    .trabajos-grid { grid-template-columns: 1fr; }
+    .trabajo-card.featured { grid-column: span 1; aspect-ratio: 16/9; }
+  }
+
+  .trabajo-card {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--dark3);
+    cursor: pointer;
+    transition: transform 0.3s;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+  .trabajo-card:hover { transform: scale(1.02); }
+  .trabajo-card.featured {
+    grid-column: span 2;
+    aspect-ratio: 21/9;
+  }
+  @media (max-width: 900px) {
+    .trabajo-card.featured { aspect-ratio: 16/9; }
+  }
+
+  .trabajo-thumb {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .trabajo-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, transparent 50%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 28px;
+    transition: all 0.3s;
+  }
+
+  .trabajo-brand {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .trabajo-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .trabajo-meta {
+    font-size: 13px;
+    color: var(--muted);
+    display: flex; gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .trabajo-play {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px; height: 56px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border: 1.5px solid rgba(255,255,255,0.3);
+  }
+  .trabajo-card:hover .trabajo-play { opacity: 1; }
+
+  /* Fondos visuales para proyectos */
+  .thumb-esped { background: linear-gradient(135deg, #1a0533, #2d0a4e, #4a1080); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .thumb-accedu { background: linear-gradient(135deg, #001a33, #003366, #0050a0); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .thumb-latam { background: linear-gradient(135deg, #001a0d, #003320, #005533); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .thumb-holding { background: linear-gradient(135deg, #1a1a00, #333300, #555500); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .thumb-avitare { background: linear-gradient(135deg, #331a00, #4d2600, #804000); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  
+  .thumb-label {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(24px, 6vw, 48px);
+    font-weight: 800;
+    opacity: 0.15;
+    letter-spacing: -2px;
+  }
+
+  /* MARCAS */
+  #marcas { background: var(--dark); }
+
+  .marcas-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .marca-item {
+    padding: 32px;
+    background: var(--dark2);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .marca-item:hover {
+    border-color: rgba(255,255,255,0.15);
+    transform: translateY(-4px);
+  }
+
+  .marca-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+  }
+  .marca-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .marca-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* EXPERIENCIA */
+  #experiencia { background: var(--dark2); }
+
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 48px;
+    padding: 40px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.3s;
+  }
+  @media (max-width: 768px) {
+    .exp-item { grid-template-columns: 1fr; gap: 16px; }
+  }
+  .exp-item:hover { padding-left: 12px; }
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-date {
+    font-size: 13px;
+    color: var(--muted);
+    padding-top: 4px;
+    font-weight: 500;
+  }
+  .exp-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .exp-company {
+    font-size: 14px;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .exp-bullets {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .exp-bullets li {
+    font-size: 14px;
+    color: var(--muted);
+    padding-left: 16px;
+    position: relative;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--c1);
+    font-size: 12px;
+  }
+
+  /* CONTACTO */
+  #contacto {
+    background: var(--dark);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #contacto::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,51,102,0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  .contacto-content { position: relative; z-index: 2; }
+
+  .contacto-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 7vw, 90px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -3px;
+    margin-bottom: 24px;
+  }
+  .contacto-title .highlight {
+    background: linear-gradient(90deg, var(--c1), var(--c2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .contacto-sub {
+    font-size: 18px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .contacto-links {
+    display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1.5px solid rgba(255,255,255,0.12);
+    color: var(--text);
+    transition: all 0.25s;
+  }
+  .contact-link:hover {
+    border-color: var(--c1);
+    color: var(--c1);
+    transform: translateY(-2px);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 48px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: var(--muted);
+    flex-wrap: wrap; gap: 12px;
+  }
+  footer span { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--text); }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">VA<span>.</span></div>
+  <div class="nav-links">
+    <a href="#sobre">Sobre mí</a>
+    <a href="#trabajos">Trabajos</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#experiencia">Trayectoria</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Disponible para proyectos</div>
+    <h1 class="hero-name">
+      <span class="line1">Valentín</span>
+      <span class="line2">Alvites.</span>
+    </h1>
+    <p class="hero-desc">
+      <strong>Especialista Audiovisual, Editor de Video & Fotógrafo</strong>[cite: 2]. Bachiller en Ciencias de la Comunicación, enfocado en conectar marcas estratégicamente con sus audiencias[cite: 2].
+    </p>
+    <div class="hero-ctas">
+      <a href="#trabajos" class="btn-primary">Ver trabajos ↓</a>
+      <a href="https://www.behance.net/valentalvites1" target="_blank" class="btn-outline">Ver Behance</a>[cite: 2]
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">Marcas activas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">150+</div>
+      <div class="stat-label">Producciones</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3+</div>
+      <div class="stat-label">Años de experiencia</div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- SOBRE MÍ -->
+<section id="sobre">
+  <div class="sobre-grid reveal">
+    <div class="sobre-text">
+      <div class="section-label">Sobre mí</div>
+      <h2 class="section-title">Cuento historias<br>con imágenes.</h2>
+      <p>Soy <strong>Valentín Alvites</strong>, especialista audiovisual y editor especializado en preproducción, producción y postproducción multimedia[cite: 2]. Cuento con un grado de **Bachiller en Ciencias de la Comunicación** otorgado por la Universidad Señor de Sipán[cite: 2].</p>
+      <p>Mi enfoque se centra en crear piezas dinámicas que generen conexiones e interacciones reales en ecosistemas digitales[cite: 2]. Domino la gestión técnica avanzada de cámaras e iluminación profesional tanto para producciones en estudio como en exteriores[cite: 2].</p>
+      <p>A lo largo de mi trayectoria he liderado, capacitado y coordinado equipos de trabajo audiovisual, implementando guiones gráficos y pautas estratégicas en sectores comerciales, inmobiliarios y educativos corporativos[cite: 2].</p>
+    </div>
+    <div class="sobre-right">
+      <div class="section-label" style="margin-bottom: 24px;">Habilidades técnicas</div>
+      <div class="skill-item">
+        <div class="skill-header"><span>Adobe Premiere Pro</span><span>95%</span></div>[cite: 2]
+        <div class="skill-bar"><div class="skill-fill" style="width:0%; background: linear-gradient(90deg, var(--c1), var(--c2));" data-width="95"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span>Adobe After Effects (Motion Graphics)</span><span>85%</span></div>[cite: 2]
+        <div class="skill-bar"><div class="skill-fill" style="width:0%; background: linear-gradient(90deg, var(--c3), var(--c4));" data-width="85"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span>Adobe Photoshop & Illustrator</span><span>90%</span></div>[cite: 2]
+        <div class="skill-bar"><div class="skill-fill" style="width:0%; background: linear-gradient(90deg, var(--c4), var(--c1));" data-width="90"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span>Adobe Lightroom (Retoque avanzado)</span><span>92%</span></div>[cite: 2]
+        <div class="skill-bar"><div class="skill-fill" style="width:0%; background: linear-gradient(90deg, var(--c2), var(--c5));" data-width="92"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span>Fotografía y Cobertura Cinematográfica (Dron)</span><span>88%</span></div>[cite: 2]
+        <div class="skill-bar"><div class="skill-fill" style="width:0%; background: linear-gradient(90deg, var(--c5), var(--c3));" data-width="88"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span>Producción de Audio & Streaming (Audition, OBS)</span><span>80%</span></div>[cite: 2]
+        <div class="skill-bar"><div class="skill-fill" style="width:0%; background: linear-gradient(90deg, var(--c1), var(--c4));" data-width="80"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRABAJOS -->
+<section id="trabajos">
+  <div class="reveal">
+    <div class="section-label">Trabajos</div>
+    <h2 class="section-title">Proyectos<br>destacados.</h2>
+  </div>
+  <div class="trabajos-grid reveal">
+    
+    <a href="https://www.behance.net/valentalvites1" target="_blank" class="trabajo-card featured">[cite: 2]
+      <div class="thumb-holding"><div class="thumb-label">HOLDING 7.5</div></div>
+      <div class="trabajo-overlay">
+        <div class="trabajo-brand" style="color: var(--c2);">Holding 7.5</div>[cite: 1]
+        <div class="trabajo-title">Gestión Audiovisual — Campañas & Eventos Institucionales</div>[cite: 2]
+        <div class="trabajo-meta">
+          <span>📹 Grabación y Postproducción</span>[cite: 2]
+          <span>👥 Supervisión de equipos</span>[cite: 2]
+          <span>📊 Estrategia digital</span>[cite: 2]
+        </div>
+      </div>
+      <div class="trabajo-play">▶</div>
+    </a>
+
+    <a href="https://www.behance.net/valentalvites1" target="_blank" class="trabajo-card">[cite: 2]
+      <div class="thumb-avitare"><div class="thumb-label">AVITARE INMOBILIARIA</div></div>
+      <div class="trabajo-overlay">
+        <div class="trabajo-brand" style="color: var(--c1);">Avitare Grupo Inmobiliario</div>[cite: 2]
+        <div class="trabajo-title">Contenido Audiovisual Corporativo & Tomas con Dron</div>[cite: 2]
+        <div class="trabajo-meta">
+          <span>🏢 Contenido Comercial</span>[cite: 2]
+          <span>🚁 Estabilizadores & Dron</span>[cite: 2]
+        </div>
+      </div>
+      <div class="trabajo-play">▶</div>
+    </a>
+
+    <a href="https://www.behance.net/valentalvites1" target="_blank" class="trabajo-card">[cite: 2]
+      <div class="thumb-esped"><div class="thumb-label">ESPED</div></div>
+      <div class="trabajo-overlay">
+        <div class="trabajo-brand" style="color: var(--c4);">Esped</div>[cite: 1]
+        <div class="trabajo-title">Reels Educativos & Contenido Multimedia</div>[cite: 1, 2]
+        <div class="trabajo-meta">
+          <span>📱 Redes Sociales</span>[cite: 2]
+          <span>🎬 Edición Dinámica</span>[cite: 2]
+        </div>
+      </div>
+      <div class="trabajo-play">▶</div>
+    </a>
+
+    <a href="https://www.behance.net/valentalvites1" target="_blank" class="trabajo-card">[cite: 2]
+      <div class="thumb-accedu"><div class="thumb-label">ACCEDU</div></div>
+      <div class="trabajo-overlay">
+        <div class="trabajo-brand" style="color: var(--c3);">Accedu</div>[cite: 1]
+        <div class="trabajo-title">Campañas Digitales de Concientización</div>[cite: 1, 2]
+        <div class="trabajo-meta">
+          <span>🧠 Salud mental & Valor</span>[cite: 1]
+          <span>🎨 Motion Graphics</span>[cite: 2]
+        </div>
+      </div>
+      <div class="trabajo-play">▶</div>
+    </a>
+
+    <a href="https://www.behance.net/valentalvites1" target="_blank" class="trabajo-card">[cite: 2]
+      <div class="thumb-latam"><div class="thumb-label">LATAM</div></div>
+      <div class="trabajo-overlay">
+        <div class="trabajo-brand" style="color: var(--c5);">Latam</div>[cite: 1]
+        <div class="trabajo-title">Series y Formación Terapéutica</div>[cite: 1]
+        <div class="trabajo-meta">
+          <span>🎓 Formato Vertical 9:16</span>[cite: 2]
+          <span>🎯 Conversión & Alcance</span>[cite: 2]
+        </div>
+      </div>
+      <div class="trabajo-play">▶</div>
+    </a>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="reveal">
+    <div class="section-label">Servicios</div>
+    <h2 class="section-title">Lo que<br>ofrezco.</h2>
+  </div>
+  <div class="servicios-grid reveal">
+    <div class="servicio-card" style="--accent: var(--c1);">
+      <div class="servicio-icon">🎬</div>
+      <div class="servicio-title">Postproducción & Edición</div>
+      <div class="servicio-desc">Edición fluida, ritmo impecable, corrección de color y diseño sonoro profesional para comerciales, redes sociales y videos institucionales[cite: 2].</div>
+      <div class="servicio-tags">
+        <span class="stag">Premiere Pro</span>[cite: 2]
+        <span class="stag">After Effects</span>[cite: 2]
+        <span class="stag">Media Encoder</span>[cite: 2]
+      </div>
+    </div>
+    <div class="servicio-card" style="--accent: var(--c2);">
+      <div class="servicio-icon">📸</div>
+      <div class="servicio-title">Fotografía Profesional</div>
+      <div class="servicio-desc">Fotografía de alta gama para proyectos de marcas, retratos corporativos, coberturas institucionales y retoque avanzado[cite: 2].</div>
+      <div class="servicio-tags">
+        <span class="stag">Cámaras Pro</span>[cite: 2]
+        <span class="stag">Photoshop</span>[cite: 2]
+        <span class="stag">Lightroom</span>[cite: 2]
+      </div>
+    </div>
+    <div class="servicio-card" style="--accent: var(--c3);">
+      <div class="servicio-icon">🚁</div>
+      <div class="servicio-title">Tomas Cinematográficas</div>
+      <div class="servicio-desc">Filmación fluida con estabilizadores mecánicos y capturas dinámicas mediante el uso técnico de drones para proyectos exigentes[cite: 2].</div>
+      <div class="servicio-tags">
+        <span class="stag">Dron</span>[cite: 2]
+        <span class="stag">Gimbals</span>[cite: 2]
+        <span class="stag">Dirección</span>[cite: 2]
+      </div>
+    </div>
+    <div class="servicio-card" style="--accent: var(--c4);">
+      <div class="servicio-icon">✨</div>
+      <div class="servicio-title">Motion Graphics</div>
+      <div class="servicio-desc">Desarrollo de animaciones gráficas en movimiento, subtítulos estilizados dinámicos y transiciones personalizadas para elevar la identidad[cite: 2].</div>
+      <div class="servicio-tags">
+        <span class="stag">Animación</span>[cite: 2]
+        <span class="stag">Efectos visuales</span>[cite: 2]
+        <span class="stag">Tipografías</span>
+      </div>
+    </div>
+    <div class="servicio-card" style="--accent: var(--c5);">
+      <div class="servicio-icon">📋</div>
+      <div class="servicio-title">Dirección & Guiones</div>
+      <div class="servicio-desc">Estructuración conceptual desde la preproducción: desarrollo completo de narrativas, escaletas, guiones literarios y técnicos[cite: 2].</div>
+      <div class="servicio-tags">
+        <span class="stag">Preproducción</span>[cite: 2]
+        <span class="stag">Estrategia</span>[cite: 2]
+        <span class="stag">Guión Técnico</span>[cite: 2]
+      </div>
+    </div>
+    <div class="servicio-card" style="--accent: var(--c1);">
+      <div class="servicio-icon">📡</div>
+      <div class="servicio-title">Streaming & Audio</div>
+      <div class="servicio-desc">Configuración y monitoreo de sistemas técnicos de transmisión digital, podcasting y optimización de captura de audio[cite: 2].</div>
+      <div class="servicio-tags">
+        <span class="stag">OBS Studio</span>[cite: 2]
+        <span class="stag">Audition</span>[cite: 2]
+        <span class="stag">Controles de Radio</span>[cite: 2]
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARCAS -->
+<section id="marcas" style="padding-top: 60px; padding-bottom: 60px;">
+  <div class="section-label reveal" style="text-align:center; margin-bottom: 40px;">Marcas y Organizaciones Colaboradoras</div>
+  <div class="marcas-row reveal">
+    <div class="marca-item">
+      <div class="marca-dot" style="background: var(--c2);"></div>
+      <div class="marca-name" style="color: var(--c2);">Holding 7.5</div>[cite: 1]
+      <div class="marca-desc">Consorcio Educativo Corporativo</div>[cite: 1, 2]
+    </div>
+    <div class="marca-item">
+      <div class="marca-dot" style="background: var(--c1);"></div>
+      <div class="marca-name" style="color: var(--c1);">Avitare</div>[cite: 2]
+      <div class="marca-desc">Grupo Inmobiliario Comercial</div>[cite: 2]
+    </div>
+    <div class="marca-item">
+      <div class="marca-dot" style="background: var(--c3);"></div>
+      <div class="marca-name" style="color: var(--c3);">Nic Maish</div>[cite: 2]
+      <div class="marca-desc">Centro de Empoderamiento Social</div>[cite: 2]
+    </div>
+    <div class="marca-item">
+      <div class="marca-dot" style="background: var(--c4);"></div>
+      <div class="marca-name" style="color: var(--c4);">Grupo RPP</div>[cite: 2]
+      <div class="marca-desc">Transmisiones Radiales Nacionales</div>[cite: 2]
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia">
+  <div class="reveal">
+    <div class="section-label">Experiencia</div>
+    <h2 class="section-title">Trayectoria<br>profesional.</h2>
+  </div>
+  <div class="exp-list reveal">
+    
+    <div class="exp-item">
+      <div class="exp-date">2025 (Mar) — 2026 (Abr)</div>[cite: 2]
+      <div>
+        <div class="exp-role">Encargado Audiovisual</div>[cite: 2]
+        <div class="exp-company" style="color: var(--c2);">Consorcio Educativo Holding 7.5 — Lima</div>[cite: 1, 2]
+        <ul class="exp-bullets">
+          <li>Supervisión técnica avanzada de equipamiento y coordinación operativa en producciones de gran escala[cite: 2].</li>
+          <li>Dirección de la cobertura de eventos institucionales y desarrollo de grabaciones de carácter corporativo[cite: 2].</li>
+          <li>Postproducción estratégica de contenidos de alto alcance y optimización de campañas audiovisuales para plataformas de redes sociales[cite: 2].</li>
+          <li>Planificación integral de guiones técnicos y desarrollo estructurado de estrategias de contenido multimedia digital[cite: 2].</li>
+          <li>Liderazgo sólido y capacitación constante del personal del equipo audiovisual a cargo[cite: 2].</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">2024 (Mar) — 2025 (Mar)</div>[cite: 2]
+      <div>
+        <div class="exp-role">Asistente Audiovisual</div>[cite: 2]
+        <div class="exp-company" style="color: var(--c3);">Consorcio Educativo Holding 7.5 — Lima</div>[cite: 1, 2]
+        <ul class="exp-bullets">
+          <li>Soporte técnico directo durante grabaciones, coberturas de eventos y postproducción multimedia digital[cite: 2].</li>
+          <li>Organización meticulosa y supervisión logística de equipamiento fotográfico y de video profesional[cite: 2].</li>
+          <li>Colaboración activa en fases creativas de conceptualización e ideación de piezas audiovisuales corporativas[cite: 2].</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">2023 (Sep)</div>[cite: 2]
+      <div>
+        <div class="exp-role">Productor Audiovisual</div>[cite: 2]
+        <div class="exp-company" style="color: var(--c1);">Avitare Grupo Inmobiliario — Chiclayo</div>[cite: 2]
+        <ul class="exp-bullets">
+          <li>Producción integrada y edición avanzada de contenidos enfocados en el mercado comercial inmobiliario[cite: 2].</li>
+          <li>Despliegue fotográfico de alta calidad corporativa y realización de tomas aéreas fluidas con dron y gimbals[cite: 2].</li>
+          <li>Estructuración de contenido multimedia orientado a la conversión comercial y al posicionamiento estratégico de marca[cite: 2].</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">2022 (Sep) — 2023 (Jul)</div>[cite: 2]
+      <div>
+        <div class="exp-role">Auxiliar en Producción Audiovisual</div>[cite: 2]
+        <div class="exp-company" style="color: var(--c5);">Nic Maish (Centro de Empoderamiento Social) — Chiclayo</div>[cite: 2]
+        <ul class="exp-bullets">
+          <li>Edición técnica y modelado gráfico de Motion Graphics aplicados a campañas sociales digitales[cite: 2].</li>
+          <li>Coberturas fotográficas completas y desarrollo de piezas multimedia para eventos de participación comunitaria[cite: 2].</li>
+          <li>Optimización e indexación de formatos de video específicos, incrementando métricas de interacción en redes[cite: 2].</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">2022 (Mar) — 2022 (Abr)</div>[cite: 2]
+      <div>
+        <div class="exp-role">Operador Técnico de Radio</div>[cite: 2]
+        <div class="exp-company" style="color: var(--c4);">Grupo RPP — Chiclayo</div>[cite: 2]
+        <ul class="exp-bullets">
+          <li>Operación técnica rigurosa de consolas, controles principales y matrices de cabina para transmisiones en vivo[cite: 2].</li>
+          <li>Postproducción, corte y edición digital avanzada de piezas y bloques de audio especializado[cite: 2].</li>
+          <li>Sincronización en tiempo real y asistencia técnica en coordinación con el equipo periodístico y de producción[cite: 2].</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">2019 — Actualidad</div>[cite: 2]
+      <div>
+        <div class="exp-role">Fotógrafo Freelance</div>[cite: 2]
+        <div class="exp-company" style="color: var(--c2);">Proyectos Independientes & Corporativos — Chiclayo / Lima</div>[cite: 2]
+        <ul class="exp-bullets">
+          <li>Planificación y captura de sesiones fotográficas profesionales en exteriores e interiores bajo control de iluminación artificial[cite: 2].</li>
+          <li>Tratamiento digital, retoque estético avanzado y revelado fotográfico digital con herramientas Adobe de última generación[cite: 2].</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Educación</div>[cite: 2]
+      <div>
+        <div class="exp-role">Bachiller en Ciencias de la Comunicación</div>[cite: 2]
+        <div class="exp-company" style="color: var(--text);">Universidad Señor de Sipán (2018 — 2023)</div>[cite: 2]
+        <ul class="exp-bullets">
+          <li>Formación teórica y práctica en lenguajes narrativos, dirección audiovisual y gestión técnica de plataformas de comunicación[cite: 2].</li>
+          <li>Taller certificado de Especialización en After Effects dictado por Marea Negra[cite: 2].</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="contacto-content reveal">
+    <h2 class="contacto-title">¿Trabajamos<br><span class="highlight">juntos?</span></h2>
+    <p class="contacto-sub">Hablemos sobre tu próximo proyecto comercial, educativo o institucional.</p>
+    <div class="contacto-links">
+      <a href="mailto:valentinalvites1802@gmail.com" class="contact-link">✉ valentinalvites1802@gmail.com</a>[cite: 2]
+      <a href="https://wa.me/51981577431" target="_blank" class="contact-link">📱 WhatsApp (+51 981 577 431)</a>[cite: 2]
+      <a href="https://www.behance.net/valentalvites1" target="_blank" class="contact-link">🎨 Behance Portafolio</a>[cite: 2]
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>© 2026 <span>Valentín Alvites</span> — Especialista Audiovisual</div>
+  <div>Hecho con dedicación en Perú 🇵🇪</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx - 6 + 'px';
+    cursor.style.top = my - 6 + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx - 18 + 'px';
+    ring.style.top = ry - 18 + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button, .trabajo-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2)';
+      ring.style.transform = 'scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Animate skill bars
+        e.target.querySelectorAll('.skill-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
